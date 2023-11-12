@@ -1,6 +1,7 @@
 const express = require('express');
 const Model = require('../models/model');
-const { STATUS_CODES, ERROR_MESSAGES } = require('../shared/constant');
+const { STATUS_CODES, STATUS_MESSAGES } = require('../shared/constant');
+const { getDetailsController, getAllController } = require('../controllers/index');
 const router = express.Router()
 
 //Post Method
@@ -15,31 +16,15 @@ router.post('/post', async (req, res) => {
         res.status(STATUS_CODES.SUCCESS).json(dataToSave)
     }
     catch (error) {
-        res.status(STATUS_CODES.ERROR).json({message: error?.message || ERROR_MESSAGES.ERROR})
+        res.status(STATUS_CODES.ERROR).json({message: error?.message || STATUS_MESSAGES.ERROR})
     }
 })
 
 //Get all Method
-router.get('/getAll', async (req, res) => {
-    try{
-        const data = await Model.find();
-        res.json(data)
-    }
-    catch(error){
-        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({message: error?.message || ERROR_MESSAGES.INTERNAL_SERVER_ERROR})
-    }
-})
+router.get('/getAll', getAllController)
 
 //Get by ID Method
-router.get('/getOne/:id', async (req, res) => {
-    try{
-        const data = await Model.findById(req?.params?.id);
-        res.json(data)
-    }
-    catch(error){
-        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({message: error?.message || ERROR_MESSAGES.INTERNAL_SERVER_ERROR})
-    }
-})
+router.get('/getOne/:id', getDetailsController)
 
 //Update by ID Method
 router.patch('/update/:id', async (req, res) => {
@@ -55,7 +40,7 @@ router.patch('/update/:id', async (req, res) => {
         res.send(result)
     }
     catch (error) {
-        res.status(STATUS_CODES.ERROR).json({ message: error?.message || ERROR_MESSAGES.ERROR })
+        res.status(STATUS_CODES.ERROR).json({ message: error?.message || STATUS_MESSAGES.ERROR })
     }
 })
 
@@ -67,7 +52,7 @@ router.delete('/delete/:id', async (req, res) => {
         res.send(`Document with ${data?.name} has been deleted..`)
     }
     catch (error) {
-        res.status(STATUS_CODES.ERROR).json({ message: error?.message || ERROR_MESSAGES.ERROR })
+        res.status(STATUS_CODES.ERROR).json({ message: error?.message || STATUS_MESSAGES.ERROR })
     }
 })
 

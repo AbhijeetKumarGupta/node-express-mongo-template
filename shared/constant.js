@@ -1,4 +1,3 @@
-// Status Codes
 const STATUS_CODES = {
     SUCCESS: 200,
     ERROR: 400,
@@ -8,7 +7,7 @@ const STATUS_CODES = {
     INTERNAL_SERVER_ERROR: 500
 };
 
-const ERROR_MESSAGES = {
+const STATUS_MESSAGES = {
     ERROR: "Something Went Wrong",
     UNAUTHENTICATED: "Unauthenticated",
     UNAUTHORIZED: "Unauthorized",
@@ -21,5 +20,5 @@ const ERROR_MESSAGES = {
 
 module.exports = { 
     STATUS_CODES,
-    ERROR_MESSAGES 
+    STATUS_MESSAGES 
 }
