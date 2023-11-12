@@ -1,5 +1,6 @@
 const express = require('express');
 const Model = require('../models/model');
+const { STATUS_CODES, ERROR_MESSAGES } = require('../shared/constant');
 const router = express.Router()
 
 //Post Method
@@ -11,10 +12,10 @@ router.post('/post', async (req, res) => {
 
     try {
         const dataToSave = await data.save();
-        res.status(200).json(dataToSave)
+        res.status(STATUS_CODES.SUCCESS).json(dataToSave)
     }
     catch (error) {
-        res.status(400).json({message: error?.message})
+        res.status(STATUS_CODES.ERROR).json({message: error?.message || ERROR_MESSAGES.ERROR})
     }
 })
 
@@ -25,7 +26,7 @@ router.get('/getAll', async (req, res) => {
         res.json(data)
     }
     catch(error){
-        res.status(500).json({message: error?.message})
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({message: error?.message || ERROR_MESSAGES.INTERNAL_SERVER_ERROR})
     }
 })
 
@@ -36,7 +37,7 @@ router.get('/getOne/:id', async (req, res) => {
         res.json(data)
     }
     catch(error){
-        res.status(500).json({message: error?.message})
+        res.status(STATUS_CODES.INTERNAL_SERVER_ERROR).json({message: error?.message || ERROR_MESSAGES.INTERNAL_SERVER_ERROR})
     }
 })
 
@@ -54,7 +55,7 @@ router.patch('/update/:id', async (req, res) => {
         res.send(result)
     }
     catch (error) {
-        res.status(400).json({ message: error?.message })
+        res.status(STATUS_CODES.ERROR).json({ message: error?.message || ERROR_MESSAGES.ERROR })
     }
 })
 
@@ -66,7 +67,7 @@ router.delete('/delete/:id', async (req, res) => {
         res.send(`Document with ${data?.name} has been deleted..`)
     }
     catch (error) {
-        res.status(400).json({ message: error?.message })
+        res.status(STATUS_CODES.ERROR).json({ message: error?.message || ERROR_MESSAGES.ERROR })
     }
 })
 
